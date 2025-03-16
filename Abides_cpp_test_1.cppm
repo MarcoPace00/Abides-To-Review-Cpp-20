@@ -29,7 +29,13 @@ int main() {
 
     // Agent2 receives the message from the shared Kernel
     std::cout << "Agent 2 is attempting to receive the message...\n";
-    agent2.receive_message();
+    OptionalMessage optMsg1 = shared_kernel.get_message();
+    if (optMsg1.isMsg) {
+        agent2.receive_message(optMsg1.msg);
+    }
+    else {
+        std::cout << "No message available for Agent 2.\n";
+    }
 
     // Agent2 sends a message
     std::cout << "Agent 2 is sending a message...\n";
@@ -37,7 +43,13 @@ int main() {
 
     // Agent1 receives the message from the shared Kernel
     std::cout << "Agent 1 is attempting to receive the message...\n";
-    agent1.receive_message();
+    OptionalMessage optMsg2 = shared_kernel.get_message();
+    if (optMsg2.isMsg) {
+        agent1.receive_message(optMsg2.msg);
+    }
+    else {
+        std::cout << "No message available for Agent 1.\n";
+    }
 
     // Check if the shared Kernel still has messages
     if (shared_kernel.has_messages()) {
